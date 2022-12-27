@@ -1,0 +1,19 @@
+description:
+  Sent periodically by the agent indicating the current state of the device.
+type: object
+properties:
+  method:
+    description:
+      A string containing the name of the method to be invoked.
+    type: string
+    const: state
+  params:
+    type: object
+    properties:
+      online:
+        description:
+          dummy
+        type: boolean
+    additionalProperties: true
+    required: [ online ]
+required: [ method, params ]

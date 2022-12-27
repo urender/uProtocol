@@ -1,0 +1,134 @@
+{
+        "$id": "https://urender.org/device.notification.json",
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "description": "uRender JSON RPC - device notifications",
+        "allOf": [
+                {
+                        "type": "object",
+                        "properties": {
+                                "jsonrpc": {
+                                        "description": "A String specifying the version of the JSON-RPC protocol. MUST be exactly \"2.0\".",
+                                        "type": "string",
+                                        "const": "2.0"
+                                }
+                        },
+                        "required": [
+                                "jsonrpc"
+                        ]
+                },
+                {
+                        "oneOf": [
+                                {
+                                        "$ref": "#/$defs/https:..urender.org.schema.v1.notification.connect"
+                                },
+                                {
+                                        "$ref": "#/$defs/https:..urender.org.schema.v1.notification.state"
+                                },
+                                {
+                                        "$ref": "#/$defs/https:..urender.org.schema.v1.result"
+                                }
+                        ]
+                }
+        ],
+        "$defs": {
+                "https:..urender.org.schema.v1.notification.connect": {
+                        "description": "Sent by a client after the websocket connection has been established.",
+                        "type": "object",
+                        "properties": {
+                                "method": {
+                                        "description": "A String containing the name of the method to be invoked.",
+                                        "type": "string",
+                                        "const": "connect"
+                                },
+                                "params": {
+                                        "type": "object",
+                                        "properties": {
+                                                "serial": {
+                                                        "description": "The serial number (label MAC) of the client establishing the connection.",
+                                                        "type": "string"
+                                                },
+                                                "uuid": {
+                                                        "description": "The unique ID of the configuration. This is the unix timestamp of when the config was created.",
+                                                        "type": "integer"
+                                                },
+                                                "firmware": {
+                                                        "description": "The devices Firmware description string (DISTRIB_DESCRIPTION).",
+                                                        "type": "string"
+                                                },
+                                                "capabilities": {
+                                                        "description": "A dictionary describing a clients hardware type, networking capabilities, ....",
+                                                        "type": "object",
+                                                        "properties": {
+                                                                "uuid": {
+                                                                        "description": "The unique ID of the capabilities. This is the unix timestamp of when the they were created.",
+                                                                        "type": "integer"
+                                                                }
+                                                        },
+                                                        "required": [
+                                                                "uuid"
+                                                        ],
+                                                        "additionalProperties": true
+                                                }
+                                        },
+                                        "required": [
+                                                "serial",
+                                                "uuid",
+                                                "firmware",
+                                                "capabilities"
+                                        ]
+                                }
+                        },
+                        "required": [
+                                "method",
+                                "params"
+                        ]
+                },
+                "https:..urender.org.schema.v1.notification.state": {
+                        "description": "Sent periodically by the agent indicating the current state of the device.",
+                        "type": "object",
+                        "properties": {
+                                "method": {
+                                        "description": "A string containing the name of the method to be invoked.",
+                                        "type": "string",
+                                        "const": "state"
+                                },
+                                "params": {
+                                        "type": "object",
+                                        "properties": {
+                                                "online": {
+                                                        "description": "dummy",
+                                                        "type": "boolean"
+                                                }
+                                        },
+                                        "additionalProperties": true,
+                                        "required": [
+                                                "online"
+                                        ]
+                                }
+                        },
+                        "required": [
+                                "method",
+                                "params"
+                        ]
+                },
+                "https:..urender.org.schema.v1.result": {
+                        "description": "Sent by a client as a response to a request.",
+                        "type": "object",
+                        "properties": {
+                                "id": {
+                                        "description": "The ID used to correlate the response to the request",
+                                        "type": "integer"
+                                },
+                                "result": {
+                                        "description": "Request specific result data.",
+                                        "type": "object",
+                                        "additionalProperties": true
+                                }
+                        },
+                        "required": [
+                                "id",
+                                "result"
+                        ]
+                }
+        }
+}

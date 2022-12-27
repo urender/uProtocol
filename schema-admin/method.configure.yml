@@ -1,0 +1,30 @@
+description:
+  Sent by a UI when a device shall be re-configured.
+type: object
+properties:
+  method:
+    description:
+      A String containing the name of the method to be invoked.
+    type: string
+    const: configure
+  params:
+    type: object
+    properties:
+      serial:
+        description:
+          The serial number of the device that shall receive the new configuration.
+        type: string
+      configuration:
+        description:
+          The new configuration blob.
+        type: object
+        properties:
+          uuid:
+            description:
+              The unique ID of the configuration. This is the unix timestamp of
+              when the config was created.
+            type: integer
+        required: [ uuid ]
+        additionalProperties: true
+    required: [ serial, configuration ]
+required: [ method, params ]

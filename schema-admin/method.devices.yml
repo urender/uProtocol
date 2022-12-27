@@ -1,0 +1,17 @@
+description:
+  Sent by a UI when it wants to get a list of the devices.
+type: object
+properties:
+  method:
+    description:
+      A String containing the name of the method to be invoked.
+    type: string
+    const: devices
+  params:
+    type: object
+    properties:
+      serial:
+        description:
+          If this parameter is set only the specific device is listed in the reply.
+        type: string
+required: [ method ]

@@ -1,0 +1,18 @@
+$id: https://urender.org/device.method.json
+$schema: http://json-schema.org/draft-07/schema#
+description: uRender JSON RPC - device methods
+allOf:
+  - type: object
+    properties:
+      jsonrpc:
+        description:
+          A String specifying the version of the JSON-RPC protocol. MUST be exactly "2.0".
+        type: string
+        const: '2.0'
+      id:
+        description:
+          An identifier established by the sender. This member is used to correlate the context
+          between request and response messages.
+    required: [ jsonrpc, id ]
+  - oneOf:
+    - $ref: 'https://urender.org/schema/v1/method/configure/'

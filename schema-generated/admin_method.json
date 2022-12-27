@@ -1,0 +1,101 @@
+{
+        "$id": "https://urender.org/admin.method.json",
+        "$schema": "http://json-schema.org/draft-07/schema#",
+        "description": "uRender JSON RPC - admin methods",
+        "allOf": [
+                {
+                        "type": "object",
+                        "properties": {
+                                "jsonrpc": {
+                                        "description": "A String specifying the version of the JSON-RPC protocol. MUST be exactly \"2.0\".",
+                                        "type": "string",
+                                        "const": "2.0"
+                                },
+                                "id": {
+                                        "description": "An identifier established by the sender. This member is used to correlate the context between request and response messages."
+                                }
+                        },
+                        "required": [
+                                "jsonrpc",
+                                "id"
+                        ]
+                },
+                {
+                        "oneOf": [
+                                {
+                                        "$ref": "#/$defs/https:..urender.org.schema.v1.method.configure"
+                                },
+                                {
+                                        "$ref": "#/$defs/https:..urender.org.schema.v1.method.devices"
+                                }
+                        ]
+                }
+        ],
+        "$defs": {
+                "https:..urender.org.schema.v1.method.configure": {
+                        "description": "Sent by a UI when a device shall be re-configured.",
+                        "type": "object",
+                        "properties": {
+                                "method": {
+                                        "description": "A String containing the name of the method to be invoked.",
+                                        "type": "string",
+                                        "const": "configure"
+                                },
+                                "params": {
+                                        "type": "object",
+                                        "properties": {
+                                                "serial": {
+                                                        "description": "The serial number of the device that shall receive the new configuration.",
+                                                        "type": "string"
+                                                },
+                                                "configuration": {
+                                                        "description": "The new configuration blob.",
+                                                        "type": "object",
+                                                        "properties": {
+                                                                "uuid": {
+                                                                        "description": "The unique ID of the configuration. This is the unix timestamp of when the config was created.",
+                                                                        "type": "integer"
+                                                                }
+                                                        },
+                                                        "required": [
+                                                                "uuid"
+                                                        ],
+                                                        "additionalProperties": true
+                                                }
+                                        },
+                                        "required": [
+                                                "serial",
+                                                "configuration"
+                                        ]
+                                }
+                        },
+                        "required": [
+                                "method",
+                                "params"
+                        ]
+                },
+                "https:..urender.org.schema.v1.method.devices": {
+                        "description": "Sent by a UI when it wants to get a list of the devices.",
+                        "type": "object",
+                        "properties": {
+                                "method": {
+                                        "description": "A String containing the name of the method to be invoked.",
+                                        "type": "string",
+                                        "const": "devices"
+                                },
+                                "params": {
+                                        "type": "object",
+                                        "properties": {
+                                                "serial": {
+                                                        "description": "If this parameter is set only the specific device is listed in the reply.",
+                                                        "type": "string"
+                                                }
+                                        }
+                                }
+                        },
+                        "required": [
+                                "method"
+                        ]
+                }
+        }
+}

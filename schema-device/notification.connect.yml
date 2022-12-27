@@ -1,0 +1,41 @@
+description:
+  Sent by a client after the websocket connection has been established.
+type: object
+properties:
+  method:
+    description:
+      A String containing the name of the method to be invoked.
+    type: string
+    const: connect
+  params:
+    type: object
+    properties:
+      serial:
+        description:
+          The serial number (label MAC) of the client establishing the
+          connection.
+        type: string
+      uuid:
+        description:
+          The unique ID of the configuration. This is the unix timestamp of
+          when the config was created.
+        type: integer
+      firmware:
+        description:
+          The devices Firmware description string (DISTRIB_DESCRIPTION).
+        type: string
+      capabilities:
+        description:
+          A dictionary describing a clients hardware type, networking
+          capabilities, ....
+        type: object
+        properties:
+          uuid:
+            description:
+              The unique ID of the capabilities. This is the unix timestamp of
+              when the they were created.
+            type: integer
+        required: [ uuid ]
+        additionalProperties: true
+    required: [ serial, uuid, firmware, capabilities ]
+required: [ method, params ]

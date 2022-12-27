@@ -1,0 +1,14 @@
+description:
+  Sent by a client as a response to a request.
+type: object
+properties:
+  id:
+    description:
+      The ID used to correlate the response to the request
+    type: integer
+  result:
+    description:
+      Request specific result data.
+    type: object
+    additionalProperties: true
+required: [ id, result ]

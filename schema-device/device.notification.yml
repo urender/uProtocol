@@ -1,0 +1,16 @@
+$id: https://urender.org/device.notification.json
+$schema: http://json-schema.org/draft-07/schema#
+description: uRender JSON RPC - device notifications
+allOf:
+  - type: object
+    properties:
+      jsonrpc:
+        description:
+          A String specifying the version of the JSON-RPC protocol. MUST be exactly "2.0".
+        type: string
+        const: '2.0'
+    required: [ jsonrpc ]
+  - oneOf:
+    - $ref: 'https://urender.org/schema/v1/notification/connect/'
+    - $ref: 'https://urender.org/schema/v1/notification/state/'
+    - $ref: 'https://urender.org/schema/v1/result/'
